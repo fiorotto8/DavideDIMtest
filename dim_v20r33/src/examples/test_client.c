@@ -3,7 +3,14 @@
 #include <string.h>
 #include <stdio.h>
 
-int t_alarm;
+//int t_alarm;
+typedef struct {
+	int t_alarm;
+	double percentage;
+}GM_var;
+
+GM_var gm;
+
 char client_str[80];
 int no_link = -1;
 
@@ -17,10 +24,13 @@ int *tag, *size;
 	time_t tsecs;
 
 	dic_get_dns_node(node);
+	printf("#################################\n");
 	printf("DNS node = %s\n",node);
 	printf("size = %d\n",*size);
-	memcpy(&t_alarm, buf, (size_t)*size);
-	printf("Alarm:%d\n", t_alarm);
+
+	memcpy(&gm, buf, (size_t)*size);
+	printf("Alarm : %d, Percentage: %f\n", gm.t_alarm, gm.percentage);
+	
 	dic_get_timestamp(0, &secs, &millis);
 	tsecs = secs;
 	my_ctime(&tsecs, str, 128);
@@ -47,17 +57,17 @@ int main(int argc, char **argv)
 	strcpy(client_str,argv[1]);
 
 	//not clear what it does
-	sprintf(aux,"%s/GASMON_ALARM",argv[2]);
+	sprintf(aux,"%s/GASMON",argv[2]);
 	dic_info_service_stamped( aux, TIMED, 5, 0, 0, rout, 1200,
 			  &no_link, 4 );
 
 	//creating the command for the server
-	sprintf(aux,"%s/GASMON_ALARM_CMD",argv[2]);
+	sprintf(aux,"%s/GASMON_CMD",argv[2]);
 	while(1)
 	{
 		sleep(1);
 		//printf("Sending Command, alarm = %d\n", t_alarm);
-		dic_cmnd_service(aux,&t_alarm,(int)sizeof(t_alarm));
+		dic_cmnd_service(aux,&gm,(int)sizeof(gm));
 	}
 	return 1;
 }

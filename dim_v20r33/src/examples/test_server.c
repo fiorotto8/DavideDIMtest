@@ -4,15 +4,25 @@
 #include <dis.h>
 
 //variables
-int t_alarm=0;
-double percentage=30.;
+//int t_alarm=0;
+//double percentage=30.;
 
-void cmnd_rout_int(int *tag, int *buf, int *size)
+typedef struct {
+	int t_alarm;
+	double percentage;
+}GM_var;
+
+GM_var gm;
+
+
+void cmnd_rout(int *tag, GM_var *buf, int *size)
 {
 	if (tag) {}
+	printf("#################################\n");
 	dim_print_date_time();
-	printf("Command received, size = %d\n", *size);
-	printf("contents = %d\n", *buf);
+	printf("\nCommand received, size = %d, GM_var size = %d:\n", *size, (int)sizeof(GM_var));
+	printf("buf->t_alarm = %d, buf->percentage = %f\n",
+			buf->t_alarm,buf->percentage);
 }
 
 void client_exited(int *tag)
@@ -33,7 +43,7 @@ void exit_cmnd(int *code)
 
 int main(int argc, char **argv)
 {
-	if(argc){}//for now just to hinibit the warning
+	if(argc){}//for now just to hinibit the warning on unused variable
 	int serv_alarm;
 	char aux[100];//storage for the strings to use
 	char name[84];//client name
@@ -42,7 +52,7 @@ int main(int argc, char **argv)
 	//setting server name
 	strcpy(srvname, argv[1]);
 
-	//print data and starting up
+	//print date and starting up
 	dim_print_date_time();
 	printf("Dim Server Starting up...\n");
 	fflush(stdout);
@@ -55,15 +65,19 @@ int main(int argc, char **argv)
 	//dis_add_service( char *name, char *type, void *address, int size, 
 	//					 void (*user_routine)(), dim_long tag)
 	//creating the service
-	snprintf(aux, sizeof(aux),"%s/GASMON_ALARM",srvname);
-	serv_alarm=dis_add_service( aux, "I", &t_alarm, sizeof(t_alarm), 
+	
+	snprintf(aux, sizeof(aux),"%s/GASMON",srvname);
+	serv_alarm=dis_add_service( aux, "d:1;d:1", &gm, sizeof(gm), 
 		(void *)0, 0 );
+
+	gm.t_alarm = 0;
+	gm.percentage = 30.;
 
 	//ADD COMMAND
 	//unsigned dis_add_cmnd( char *name, char *type, void (*user_routine)(), dim_long tag ) 
 	//creating the command
-	snprintf(aux, sizeof(aux), "%s/GASMON_ALARM_CMD", srvname);
-	dis_add_cmnd(aux, "X", cmnd_rout_int, 0);
+	snprintf(aux, sizeof(aux), "%s/GASMON_CMD", srvname);
+	dis_add_cmnd(aux, "X", cmnd_rout, 0);
 	
 	//sart serving
 	dis_start_serving( argv[1] );
@@ -76,8 +90,10 @@ int main(int argc, char **argv)
 	
 	while(1)
 	{
-		t_alarm++;
+		gm.t_alarm++;
+		gm.percentage++;
 		dis_update_service(serv_alarm);
+		//printf("t_alarm = %d, percentage = %f\n", gm.t_alarm, gm.percentage);
 		sleep(1);
 	}
 	return 1;
