@@ -1,0 +1,17 @@
+export OS=Linux
+export DIMDIR=/home/fior/DavideDIMtest/dim_v20r33
+export ODIR=linux
+export LD_LIBRARY_PATH=${DIMDIR}/${ODIR}
+export PATH=${PATH}:.     
+export JDK_INCLUDE=/usr/lib/jvm/java-8-openjdk-amd64/include
+export DIM_DNS_NODE=172.29.40.13
+#aliases
+alias Test_server='$DIMDIR/$ODIR/test_server'
+alias Test_client='$DIMDIR/$ODIR/test_client'
+alias Dns='$DIMDIR/$ODIR/dns'
+alias Dim_get_service='$DIMDIR/$ODIR/dim_get_service'
+alias Dim_send_command='$DIMDIR/$ODIR/dim_send_command'
+alias DimBridge='$DIMDIR/$ODIR/DimBridge'
+alias Did='$DIMDIR/$ODIR/did'
+alias DemoClient='$DIMDIR/$ODIR/demo_client'
+alias DemoServer='$DIMDIR/$ODIR/demo_server'
