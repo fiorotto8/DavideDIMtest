@@ -1,10 +1,10 @@
 export OS=Linux
-export DIMDIR=/home/fior/DavideDIMtest/dim_v20r33
+export DIMDIR=/home/gem3/DavideDIMtest/dim_v20r33
 export ODIR=linux
 export LD_LIBRARY_PATH=${DIMDIR}/${ODIR}
 export PATH=${PATH}:.     
 export JDK_INCLUDE=/usr/lib/jvm/java-8-openjdk-amd64/include
-export DIM_DNS_NODE=172.29.40.13
+export DIM_DNS_NODE=128.141.91.109
 #aliases
 alias Test_server='$DIMDIR/$ODIR/test_server'
 alias Test_client='$DIMDIR/$ODIR/test_client'
