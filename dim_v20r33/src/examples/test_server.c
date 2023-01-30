@@ -94,7 +94,7 @@ int main(int argc, char **argv)
 		gm.percentage++;
 		dis_update_service(serv_alarm);
 		//printf("t_alarm = %d, percentage = %f\n", gm.t_alarm, gm.percentage);
-		sleep(1);
+		sleep(5);
 	}
 	return 1;
 
