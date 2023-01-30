@@ -5,7 +5,7 @@
 
 //variables
 int t_alarm=0;
-//double percentage=30.;
+double percentage=30.;
 
 void cmnd_rout_int(int *tag, int *buf, int *size)
 {
