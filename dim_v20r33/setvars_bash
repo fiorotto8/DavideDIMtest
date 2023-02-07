@@ -1,5 +1,5 @@
 export OS=Linux
-export DIMDIR=/home/gem3/DavideDIMtest/dim_v20r33
+export DIMDIR=/home/fior/DavideDIMtest/dim_v20r33
 export ODIR=linux
 export LD_LIBRARY_PATH=${DIMDIR}/${ODIR}
 export PATH=${PATH}:.     

@@ -19,7 +19,7 @@ GM_var get_vars(char path[]) {
 	GM_var test_gm;
 
 	//test_gm.t_alarm=0;
-	//test_gm.percentage=0.;\
+	//test_gm.percentage=0.;
 
 	//read the file in path up to the end
 	//at the end of cycle the tmp variable will contain teh last row
@@ -131,9 +131,8 @@ int main(int argc, char **argv)
 		gm=get_vars(file);
 
 		dis_update_service(serv_alarm);
-		printf("t_alarm = %f, percentage = %f\n", gm.t_alarm, gm.percentage);
+		//printf("t_alarm = %f, percentage = %f\n", gm.t_alarm, gm.percentage);
 
-		
 		//printf("t_alarm = %d, percentage = %f\n", gm.t_alarm, gm.percentage);
 		sleep(1);
 	}
